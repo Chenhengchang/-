@@ -76,11 +76,11 @@ public class ClazzController {
 		
 	}
 	//void saveOrUpdate(Clazz clazz) throws Exception;
-	@PostMapping("saveorUpdateClazzVM")
-	public MsgResponse saveorUpdateClazzVM(ClazzVM clazzVM){
+	@PostMapping("saveorUpdateClazz")
+	public MsgResponse saveorUpdateClazz(Clazz clazz){
 		try {
-			clazzService.saveOrUpdate(clazzVM);
-			return MsgResponse.success("更改数据成功",clazzVM);
+			clazzService.saveOrUpdate(clazz);;
+			return MsgResponse.success("更改数据成功",clazz);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return MsgResponse.error(e.getMessage());

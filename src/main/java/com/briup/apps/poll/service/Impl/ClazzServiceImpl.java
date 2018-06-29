@@ -43,12 +43,12 @@ public class ClazzServiceImpl implements IClazzService{
 	}
 
 	@Override
-	public void saveOrUpdate(ClazzVM clazzVM) throws Exception {
+	public void saveOrUpdate(Clazz clazz) throws Exception {
 		// TODO Auto-generated method stub
-		if (clazzVM.getId()!=null) {
-			clazzVMMapper.updateByPrimaryKeyWithBLOBs(clazzVM);
+		if (clazz.getId()!=null) {
+			clazzMapper.updateByPrimaryKeyWithBLOBs(clazz);
 			}else {
-				clazzVMMapper.insert(clazzVM);
+				clazzMapper.insert(clazz);
 			}
 	}
 
