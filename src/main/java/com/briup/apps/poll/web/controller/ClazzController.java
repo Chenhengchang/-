@@ -15,6 +15,7 @@ import com.briup.apps.poll.service.IClazzService;
 import com.briup.apps.poll.util.MsgResponse;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @Api(description="班级相关接口")
 @RestController
@@ -22,6 +23,7 @@ import io.swagger.annotations.Api;
 public class ClazzController {
 	@Autowired
 	private IClazzService clazzService;
+	@ApiOperation(value="查询班级所有信息",notes="查询结果不包含Grade,User")
 	@GetMapping("findAllClazz")
 	/**
 	 * 调用util下MsgResponse.java文件下返回信息
@@ -38,6 +40,7 @@ public class ClazzController {
 			return MsgResponse.error(e.getMessage());
 		}
 	}
+	@ApiOperation(value="查询班级所有信息",notes="查询结果包括Grade,User")
 	@GetMapping("findAllClazzVM")
 	public MsgResponse findAllClazzVM(){	
 		try {
@@ -52,6 +55,7 @@ public class ClazzController {
 			return MsgResponse.error(e.getMessage());
 		}
 	}
+	@ApiOperation(value="通过ID查询班级信息",notes="查询结果包含Grade,User")
 	@GetMapping("findByIdClazzVM")
 	public MsgResponse findByIdClazzVM(@RequestParam long id){
 		try {
@@ -63,6 +67,7 @@ public class ClazzController {
 		}	
 	}
 	//List<Course>query(String keywords) throws Exception;
+	@ApiOperation(value="通过关键字查询班级信息",notes="查询结果包含Grade,User")
 	@GetMapping("findKeyWords")
 	public MsgResponse findKeyWords(String keywords){
 		try {
@@ -76,6 +81,7 @@ public class ClazzController {
 		
 	}
 	//void saveOrUpdate(Clazz clazz) throws Exception;
+	@ApiOperation(value="增加或修改班级信息",notes="输入ID为修改信息，不输入ID是增加信息")
 	@PostMapping("saveorUpdateClazz")
 	public MsgResponse saveorUpdateClazz(Clazz clazz){
 		try {
@@ -88,6 +94,7 @@ public class ClazzController {
 	}
 	
 	//void deleteById(long id)throws Exception;
+	@ApiOperation(value="通过ID删除信息")
 	@GetMapping("deleteByIdClazz")
 	public MsgResponse deleteByIdClazz(@RequestParam long id){
 		try {
@@ -101,6 +108,7 @@ public class ClazzController {
 		
 	}
 	//void batchDelete(List<Long> ids)throws Exception;
+	@ApiOperation(value="通过ID批量删除班级信息",notes="输入ID号，通过‘,’号间隔")
 	@GetMapping("batchDeleteClazz")
 	public MsgResponse batchDeleteClazz(@RequestParam List<Long> ids){
 		try {

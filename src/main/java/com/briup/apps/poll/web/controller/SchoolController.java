@@ -72,6 +72,7 @@ public MsgResponse saveOrupdateSchool(School school){
 	  	return MsgResponse.error(e.getMessage());
 	  }
 }
+@ApiOperation(value="通过ID删除学校信息")
 @GetMapping("deleteSchoolById")
 public MsgResponse deleteSchoolById(@RequestParam long id){
 	  //调用service层代码完成课程信息的删除
