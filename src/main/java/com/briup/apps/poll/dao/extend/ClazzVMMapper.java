@@ -14,6 +14,7 @@ public interface ClazzVMMapper {
 	ClazzVM selectByPrimaryKey(long id);
 
 
+	
 
 	List<ClazzVM> selectByExampleWithBLOBs(String keywords);
 
