@@ -2,11 +2,11 @@ package com.briup.apps.poll.web.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.briup.apps.poll.bean.Survey;
 import com.briup.apps.poll.bean.extend.SurveyVM;
 import com.briup.apps.poll.service.ISurveyService;
@@ -22,71 +22,32 @@ public class SurveyController {
 	@Autowired
 	private ISurveyService surveyService;
 	
-	@ApiOperation(value="查询所有课程调查",notes="单表")
-	@PostMapping("findAllSurvey")
-	public MsgResponse findAllSurvey(){
-		try{
-			List<Survey> list=surveyService.findAll();
-			//返回成功信息
-			return MsgResponse.success("success",list);
-		}catch(Exception e){
-			e.printStackTrace();
-			//返回错误信息
-			return MsgResponse.error(e.getMessage());
-		}
-	}
-	
 	@ApiOperation(value="查询所有课程调查",notes="课程调查中包含，班级等信息")
-	@PostMapping("findAllVM")
-	public MsgResponse findAllVM(){
+	@GetMapping("findAllSurveyVM")
+	public MsgResponse findAllSurveyVM(){
 		try{
-			List<SurveyVM> list=surveyService.findAllSurveyVM();
-			//返回成功信息
+			List<SurveyVM> list=surveyService.findAll();
 			return MsgResponse.success("success",list);
 		}catch(Exception e){
 			e.printStackTrace();
-			//返回错误信息
 			return MsgResponse.error(e.getMessage());
 		}
 	}
-	@PostMapping("findById")
-	public MsgResponse findById(@RequestParam long id){
-		try{
-			Survey survey=surveyService.findById(id);
-			//返回成功信息
-			return MsgResponse.success("success",survey);
-		}catch(Exception e){
-			e.printStackTrace();
-			//返回错误信息
-			return MsgResponse.error(e.getMessage());
-		}
-	}
+
 	
-	@PostMapping("findByIdVM")
-	public MsgResponse findByIdVM(@RequestParam long id){
+	@PostMapping("findSurveyVMById")
+	public MsgResponse findSurveyVMById(@RequestParam long id){
 		try{
-			SurveyVM survey=surveyService.findByIdSurveyVM(id);
+			SurveyVM surveyVM=surveyService.findByIdSurveyVM(id);
 			//返回成功信息
-			return MsgResponse.success("success",survey);
+			return MsgResponse.success("success",surveyVM);
 		}catch(Exception e){
 			e.printStackTrace();
 			//返回错误信息
 			return MsgResponse.error(e.getMessage());
 		}
 	}
-	@PostMapping("findkeywords")
-	public MsgResponse query(String keywords){
-		try{
-			List<Survey> list=surveyService.query(keywords);
-			//返回成功信息
-			return MsgResponse.success("success",list);
-		}catch(Exception e){
-			e.printStackTrace();
-			//返回错误信息
-			return MsgResponse.error(e.getMessage());
-		}
-	}
-	
+
 	@PostMapping("findkeywordsVM")
 	public MsgResponse queryVM(String keywords){
 		try{
@@ -100,13 +61,13 @@ public class SurveyController {
 		}
 	}
 	
-
-	@PostMapping("saveOrUpdate")
-	public MsgResponse saveOrUpdate(Survey survey){
+    @ApiOperation(value="保存或更新课调",notes="如果参数中包含id表示修改，否则添加，只需接受clazzId")
+	@PostMapping("saveOrUpdateSurvey")
+	public MsgResponse saveOrUpdateSurvey(Survey survey){
 		try{
 			surveyService.saveOrUpdate(survey);
 			//返回成功信息
-			return MsgResponse.success("success",survey);
+			return MsgResponse.success("保存或更新成功",survey);
 		}catch(Exception e){
 			e.printStackTrace();
 			//返回错误信息
@@ -114,20 +75,23 @@ public class SurveyController {
 		}
 	}
 	
+    @ApiOperation(value="通过ID删除课调",notes="级联课调下的答卷信息")
 	@PostMapping("deleteSurveyById")
 	public MsgResponse deleteSurveyById(@RequestParam long id){
 		try{
 			surveyService.deleteById(id);
 			//返回成功信息
-			return MsgResponse.success("success",id);
+			return MsgResponse.success("删除成功",null);
 		}catch(Exception e){
 			e.printStackTrace();
 			//返回错误信息
 			return MsgResponse.error(e.getMessage());
 		}
 	}
-	@PostMapping("batchdeleteSurvey")
-	public MsgResponse batchDeleteSurvey(@RequestParam List<Long> ids){
+    
+    @ApiOperation(value="批量删除课调",notes="级联课调下的答卷信息")
+	@PostMapping("batchdeleteSurveyById")
+	public MsgResponse batchDeleteSurveyById(@RequestParam List<Long> ids){
 		try{
 			surveyService.batchDelete(ids);
 			//返回成功信息

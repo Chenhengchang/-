@@ -6,12 +6,11 @@ import com.briup.apps.poll.bean.extend.SurveyVM;
 
 public interface SurveyVMMapper {
 	
-	List<SurveyVM> selectAll() throws Exception;
+	List<SurveyVM> selectAll();
 	
-	
-	 SurveyVM findByIdSurveyVM(long id) throws Exception;
+	SurveyVM selectByIdSurveyVM(long id);
 	 //关键字查询
-	 List<SurveyVM> queryVM(String keywords) throws Exception;
+	List<SurveyVM> queryVM(String keywords) throws Exception;
 
 
 

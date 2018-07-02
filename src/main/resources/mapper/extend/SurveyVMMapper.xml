@@ -3,8 +3,9 @@
 <mapper namespace="com.briup.apps.poll.dao.extend.SurveyVMMapper">
 		<select id="selectAll"  resultMap="SurveyVM">
 		    select * from poll_survey
+		    <!-- id,status,code,surveyDate,course_id,user_id,clazz_id,questionnaire_id -->
 		</select>
-		<select id="findByIdSurveyVM"  resultMap="SurveyVM">
+		<select id="selectByIdSurveyVM"  parameterType="long" resultMap="SurveyVM">
 		    select * from poll_survey
 		    where id=#{id}
 		</select>	
@@ -12,32 +13,39 @@
 	        select * from poll_survey
 	        where code like CONCAT('%',#{code},'%') 
 		</select>
-		
+		<delete id="deleteById" parameterType="java.lang.Long">
+            delete from poll_survey
+            where id = #{id,jdbcType=BIGINT}
+        </delete>
+        <delete id="batchdeleteSurveyById" parameterType="java.lang.Long">
+            delete from poll_survey
+            where id = #{ids}
+        </delete>
 		<!-- 定义结果集 -->		
 		<resultMap type="com.briup.apps.poll.bean.extend.SurveyVM"	id="SurveyVM"	>
 		   <id column="id" property="id"/>
 		   <result column="status" property="status"/>
 		   <result column="code" property="code"/>
 		   <result column="surveyDate" property="surveyDate"/>
-		   <association
+		    <association
 		       column="course_id" 
 		       property="course"
 		       select="com.briup.apps.poll.dao.CourseMapper.selectByPrimaryKey">
 		   </association>
-		   <association
+		  <association
 		       column="clazz_id" 
-		       property="clazz"
-		       select="com.briup.apps.poll.dao.ClazzMapper.selectByPrimaryKey">
+		       property="clazzVM"
+		       select="com.briup.apps.poll.dao.extend.ClazzVMMapper.selectByPrimaryKey">
 		    </association>
-		    <association
-		       column="charge_id" 
-		       property="charge"
+		     <association
+		       column="user_id" 
+		       property="user"
 		       select="com.briup.apps.poll.dao.UserMapper.selectByPrimaryKey">
 		    </association>
-		    <association
+		    <!-- <association
 		       column="questionnaire_id" 
-		       property="questionnaire"
-		       select="com.briup.apps.poll.dao.QuestionnaireMapper.selectByPrimaryKey">
-		    </association>
+		       property="qnVM"
+		       select="com.briup.apps.poll.dao.QuestionnaireMapper.selectById">
+		    </association> -->
 		</resultMap> 
 </mapper>
