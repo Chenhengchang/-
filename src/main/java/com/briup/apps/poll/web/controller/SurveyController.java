@@ -22,6 +22,31 @@ public class SurveyController {
 	@Autowired
 	private ISurveyService surveyService;
 	
+	@ApiOperation(value="开启课调",notes="只有在课调状态为未开启的时候才能开启课调")
+	@GetMapping("beginSurvey")
+	public MsgResponse beginSurvey(long id){
+		try{
+			//1.通过id查询课调
+			Survey survey=surveyService.findSurveyById(id);
+	        //2.修改课调状态、课程编号
+			if(survey.getStatus().equals(Survey.STATUS_INIT)){
+				//2.1当前课调状态设置为开启
+				survey.setStatus(Survey.STATUS_BEGIN);
+				//2.2将课调的code设置为当前课调的id，后期要通过code找survey
+				survey.setCode(survey.getId().toString());
+				//2.3执行或保存更新操作
+				surveyService.saveOrUpdate(survey);
+				return MsgResponse.success("开启成功",null);
+			}else{
+				return MsgResponse.error("当前课调状态必须为未开启状态");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			return MsgResponse.error(e.getMessage());
+		}
+	
+	}
+	
 	@ApiOperation(value="查询所有课程调查",notes="课程调查中包含，班级等信息")
 	@GetMapping("findAllSurveyVM")
 	public MsgResponse findAllSurveyVM(){

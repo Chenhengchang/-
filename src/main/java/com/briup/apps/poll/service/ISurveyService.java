@@ -9,8 +9,10 @@ import com.briup.apps.poll.bean.extend.SurveyVM;
 public interface ISurveyService {
  
 	List<SurveyVM> findAll()throws Exception;
-	
+	//级联查询
 	SurveyVM findByIdSurveyVM(long id)throws Exception;
+	//查询单表
+	Survey findSurveyById(long id)throws Exception;
 	
 	List<SurveyVM> queryVM(String keywords) throws Exception;
 	

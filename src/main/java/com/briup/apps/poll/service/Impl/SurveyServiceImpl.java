@@ -69,6 +69,11 @@ public class SurveyServiceImpl implements ISurveyService{
 		return surveyVMMapper.queryVM(keywords);
 	}
 
+	@Override
+	public Survey findSurveyById(long id) throws Exception {
+		// TODO Auto-generated method stub
+		return surveyMapper.selectByPrimaryKey(id);
+	}
 	}
 
 
